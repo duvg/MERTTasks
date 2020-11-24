@@ -15,9 +15,8 @@ const ListProjects = () => {
     }, [])
 
     // Comprobar si proyectos tiene contenido
-    if ( projects.length === 0) return null;
+    if ( projects.length === 0) return <p className="m-3 text-dark">No hay proyectos, comienza creando uno!</p>;
 
-    
 
     return (
         <ul className="listProjects">

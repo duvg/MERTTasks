@@ -7,13 +7,16 @@ const NewProject = () => {
 
     //Obtener el state del formulario
     const projectsContext = useContext(projectContext);
-    const { form, showForm } = projectsContext;
+    const { form, errorform, showForm, addProject, showErrorForm } = projectsContext;
 
 
     // State para Project
     const [project, setProject] = useState ({
         name: '',
     });
+
+    // Extraer el nombre
+    const { name } = project;
 
     // cambios en los campos del formulario
     const onChangeProject = e => {
@@ -28,14 +31,19 @@ const NewProject = () => {
         e.preventDefault();
 
         // Validar el proyecto
-        // TODO: Validar el proyecto
+        if (name === '') {
+            showErrorForm();
+            return;
+        }
         
         // Agregar los cambios al state
-        // TODO: Agregar los cambios al state
+        addProject(project);
 
         // Reiniciar el formulario
-
-        // TODO: Limpair el formulario
+        setProject({
+            name: ''
+        });
+        
         
     }
 
@@ -43,8 +51,6 @@ const NewProject = () => {
         showForm();
     };
 
-    // Extraer el nombre
-    const { name } = project;
 
     return ( 
         <Fragment>
@@ -61,7 +67,6 @@ const NewProject = () => {
                     ? 
                         (
                             <form 
-                                className="mb-5"
                                 onSubmit={onSubmitProject}
                             >
                                 <input
@@ -81,9 +86,8 @@ const NewProject = () => {
                                 />
                             </form>
                         ) : null
-                        
-
                 }
+                { errorform ? <p className="alert alert-danger mt-2"> El nombre es obligatorio</p> : null}
             </div>
         </Fragment>
      );

@@ -10,7 +10,7 @@ const Sidebar = () => {
                 <h3 className="mainTitle text-center">MERN<span>Tasks</span></h3>
             </div>
             <NewProject />
-            <div className="text-center">
+            <div className="text-center mt-5">
                 <h3>Tus proyectos</h3>
             </div>
             

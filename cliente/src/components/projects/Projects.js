@@ -16,6 +16,7 @@ const Projects = () => {
                 <Navbar />
                 <main>
                     <FormTask />
+                    <hr />
                     <div className="row justify-content-center">
                         <div className="content-tasks col-md-6">
                             <ListTasks />
