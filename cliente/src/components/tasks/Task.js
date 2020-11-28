@@ -1,6 +1,42 @@
-import React from 'react';
+import React, { useContext } from 'react';
+
+import projectContext from '../../context/projects/projectContext';
+import taskContext from '../../context/tasks/taskContext';
 
 const Task = ({task}) => {
+
+    // Obtener el context y extraer el proyecto
+    const projectsContext = useContext(projectContext);
+    const { project } = projectsContext;
+    const [currentProject] = project;
+
+    // Obtener el context y extraer la función
+    const tasksContext = useContext(taskContext);
+    const { getTasks, deleteTask, changeTaskStatus, setCurrentTask } = tasksContext;
+
+
+
+    // Eliminar la tarea cuando el usario hace click en el boton eliminar
+    const handleTaskDelete = taskId => {
+        deleteTask(taskId);
+        getTasks(currentProject.id);
+    }
+
+    // Modificar el estado de la tarea
+    const handleChangeStatus = task => {
+        if (task.status) {
+            task.status = false;
+        } else {
+            task.status = true;
+        }
+        changeTaskStatus(task);
+    }
+
+    // Obtener la tarea actual que el usuario desea editarr
+    const handleSetCurrentTask = task => {
+        setCurrentTask(task);
+    }
+
     return ( 
         <li className="alert alert-light taskShadow" role="alert">
             <p>{task.name}</p>
@@ -9,12 +45,14 @@ const Task = ({task}) => {
                 <button
                     type="button"
                     className="btn btn-primary btn-sm mr-2"
+                    onClick={() => handleSetCurrentTask(task)}
                 >
                     Editar
                 </button>
                 <button
                     type="button"
                     className="btn btn-danger btn-sm"
+                    onClick={() => handleTaskDelete(task.id)}
                 >
                     Eliminar
                 </button>
@@ -27,6 +65,7 @@ const Task = ({task}) => {
                         <span
                             type="button"
                             className="badge badge-success"
+                            onClick={() => handleChangeStatus(task)}
                         >Completo</span>
                     )
                 :
@@ -34,6 +73,7 @@ const Task = ({task}) => {
                         <span
                             type="button"
                             className="badge badge-warning"
+                            onClick={() => handleChangeStatus(task)}
                         >Incompleto</span>
                     )
                 }

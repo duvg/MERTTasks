@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 
 import Project from './Project';
 import projectContext from '../../context/projects/projectContext';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 const ListProjects = () => {
 
@@ -11,7 +12,8 @@ const ListProjects = () => {
 
     // Obtener proyectos al cargar el componente
     useEffect(() => {
-        getProjects()
+        getProjects();
+        // eslint-disable-next-line
     }, [])
 
     // Comprobar si proyectos tiene contenido
@@ -20,12 +22,16 @@ const ListProjects = () => {
 
     return (
         <ul className="listProjects">
+       
             {projects.map(project => (
-                <Project
-                    key={project.id}
-                    project={project}
-                />
+  
+                    <Project
+                         key={project.id}
+                        project={project}
+                    />
+               
             ))}
+          
         </ul>
     );
 }

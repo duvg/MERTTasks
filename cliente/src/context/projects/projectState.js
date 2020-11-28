@@ -9,7 +9,7 @@ import {
     GET_PROJECTS,
     ADD_PROJECT,
     VALIDATE_FORM,
-    ACTUAL_PROJECT,
+    CURRENT_PROJECT,
     DELETE_PROJECT
  } from '../../types';
 
@@ -62,16 +62,16 @@ const ProjectState = props => {
 
     // Error de validacion del form
     const showErrorForm = () => {
-        console.log("paso");
+        
         dispatch({
             type: VALIDATE_FORM
         })
     }
 
     // Seleccionar el proyecto que el usuario le dio click
-    const actualProject = projectId => {
+    const currentProject = projectId => {
         dispatch({
-            type: ACTUAL_PROJECT,
+            type: CURRENT_PROJECT,
             payload: projectId
         })
     }
@@ -98,7 +98,7 @@ const ProjectState = props => {
                 getProjects,
                 addProject,
                 showErrorForm,
-                actualProject,
+                currentProject,
                 deleteProject
             }}
         >

@@ -1,7 +1,11 @@
-import React, { Fragment, useContext } from 'react';
+import React, { Fragment, useContext, useRef } from 'react';
+
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+
 import Task from './Task';
 
 import projectContext from '../../context/projects/projectContext';
+import tasksContext from '../../context/tasks/taskContext';
 
 const ListTasks = () => {
 
@@ -9,36 +13,47 @@ const ListTasks = () => {
     const projectsContext = useContext(projectContext);
     const { project, deleteProject} = projectsContext;
 
+    // Obtener las tareas del proyecto
+    const taskContext = useContext(tasksContext);
+    const { tasksproject } = taskContext;
+
+    const nodeRef = useRef(null);
+
     // Si no hay un proyecto seleccinado 
     if ( ! project ) return  <h2>Selecciona un proyecto</h2>;
 
     // Array destructiring para extraer el proyecto
     const [actualProject] = project;
 
-    const tasks = [
-        { id: 1, name: 'Elegir Plataforma', status: true },
-        { id: 2, name: 'Elegir Cursos', status: false },
-        { id: 3, name: 'Elegir Dominios', status:  false },
-        { id: 4, name: 'Elegir Hardware', status: true }
-    ];
-
     // Eliminar un proyecto
     const onClickDelete = () => {
         deleteProject(actualProject.id);
     }
+    
 
     return (
         <Fragment>
             <h2>Proyecto: { actualProject.name }</h2>
             <ul className="taskList">
-                {tasks.length === 0
-                    ? (<li className="tasks"><p>No hay tareas</p></li>)
-                    : tasks.map(task => (
-                        <Task
-                            key={task.id}
-                            task={task}
-                        />
-                    ))
+                {tasksproject.length === 0
+                    ? (<li className="tasks"><p className="alert alert-light">No hay tareas</p></li>)
+                    : 
+                    <TransitionGroup>
+                    {
+                        tasksproject.map(task => (
+                            <CSSTransition
+                                key={task.id}
+                                timeout={200}
+                                classNames="task"
+                                nodeRef={nodeRef}
+                            >
+                                <Task    
+                                    task={task}
+                                />
+                            </CSSTransition>
+                        ))
+                    }    
+                    </TransitionGroup>
                 }
             </ul>
 
