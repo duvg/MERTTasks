@@ -53,7 +53,7 @@ const Register = () => {
             showAlert('Los passwords no coinciden', 'danger');
             return;
         } 
-        console.log(password, confirm);
+        
 
         // Los 2 passwords deben ser iguales
 

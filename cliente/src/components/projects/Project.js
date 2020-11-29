@@ -1,15 +1,15 @@
 import React, { useContext } from 'react';
-import projectContext from '../../context/projects/projectContext';
-import tasksContext from '../../context/tasks/taskContext'
+import ProjectContext from '../../context/projects/projectContext';
+import TaskContext from '../../context/tasks/taskContext'
 
 const Project = ({ project }) => {
     
     // Obtener el state 
-    const projectsContest = useContext(projectContext);
-    const { currentProject } = projectsContest;
+    const projectContest = useContext(ProjectContext);
+    const { currentProject } = projectContest;
 
     // Obtener la función del context de tarea
-    const taskContext = useContext(tasksContext);
+    const taskContext = useContext(TaskContext);
     const { getTasks } = taskContext;
 
     // Funcion para agregar el proyecto actual

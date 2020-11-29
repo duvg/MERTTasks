@@ -1,14 +1,14 @@
 import React, { useContext, useEffect } from 'react';
 
 import Project from './Project';
-import projectContext from '../../context/projects/projectContext';
+import ProjectContext from '../../context/projects/projectContext';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 const ListProjects = () => {
 
     // Extraer los proyectos del state inicial
-    const projectsContext = useContext(projectContext);
-    const { projects, getProjects } = projectsContext;
+    const projectContext = useContext(ProjectContext);
+    const { projects, getProjects } = projectContext;
 
     // Obtener proyectos al cargar el componente
     useEffect(() => {

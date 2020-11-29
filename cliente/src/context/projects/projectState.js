@@ -51,7 +51,7 @@ const ProjectState = props => {
 
     // Add new project
     const addProject = project => {
-        project.id = uuidv4()
+        project.id = uuidv4();
 
         // Guardar proyecto en el state
         dispatch({

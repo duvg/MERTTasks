@@ -57,7 +57,7 @@ const TaskState = props => {
 
     // Agregar una tarea al proyecto seleccionado
     const addTask = task => {
-        task.id = uuidv4.v4(); // Asignamos el id a la tarea
+        task.id = uuidv4(); // Asignamos el id a la tarea
         dispatch({
             type: ADD_TASK,
             payload: task
