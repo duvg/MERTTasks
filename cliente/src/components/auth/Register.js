@@ -1,12 +1,16 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import AlertContext from '../../context/alerts/alertContext';
+import AuthContext from '../../context/authentication/authContext';
 
-const Register = () => {
+const Register = (props) => {
 
     // Extraer los valores de context
     const alertContext = useContext(AlertContext);
     const { alert, showAlert } = alertContext;
+
+    const authContext = useContext(AuthContext);
+    const { message, authenticated, registerUser } = authContext;
 
     // etado para iniciar sesion
     const [user, setUser] = useState ({
@@ -14,7 +18,19 @@ const Register = () => {
         email: '',
         password: '',
         confirm: ''
-    })
+    });
+    
+    // En caso de que el usuario se haya autenticado, registrado o sea un registro duplicado
+    useEffect(() => {
+        if(authenticated || localStorage.getItem('authenticated')) {
+            props.history.push('/projects');
+        }
+
+        if(message) {
+            showAlert(message.msg, message.category);
+        }
+
+    }, [message, authenticated, props.history]);
 
     // extraer los datos de usuario
     const { name, email, password, confirm } = user;
@@ -53,11 +69,13 @@ const Register = () => {
             showAlert('Los passwords no coinciden', 'danger');
             return;
         } 
-        
-
-        // Los 2 passwords deben ser iguales
 
         // Pasar al action
+        registerUser({
+            name,
+            email,
+            password
+        });
     }
 
 

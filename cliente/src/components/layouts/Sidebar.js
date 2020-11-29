@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import NewProject from '../projects/NewProject';
 import ListProjects from '../projects/ListProjects';

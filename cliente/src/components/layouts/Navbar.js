@@ -10,7 +10,7 @@ const Navbar = () => {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="nav navbar-nav ml-auto">
                         <li className="nav-item">
-                            <a className="nav-link nav-link-c" href="#">Cerrar Sesión</a>
+                            <a className="nav-link nav-link-c" href="/#">Cerrar Sesión</a>
                         </li>
                     </ul>
                 </div>
