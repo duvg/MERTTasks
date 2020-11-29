@@ -1,6 +1,5 @@
 const Project = require('../models/Project');
 const { validationResult } = require('express-validator');
-const { response } = require('express');
 
 // Crea un nuevo proyecto
 exports.newProject = async (req, res) => {
@@ -99,7 +98,7 @@ exports.deleteProject = async (req, res) => {
         }
 
         // Eliminar el proyecto
-        await Project.findOneAndDelete({_id: req.params.id});
+        await Project.findOneAndRemove({_id: req.params.id});
         res.status(200).json({msg: 'Projecto eliminado'});
 
 
