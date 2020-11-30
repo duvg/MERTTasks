@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 
 import Project from './Project';
 import ProjectContext from '../../context/projects/projectContext';
@@ -9,6 +9,8 @@ const ListProjects = () => {
     // Extraer los proyectos del state inicial
     const projectContext = useContext(ProjectContext);
     const { projects, getProjects } = projectContext;
+
+    const nodeRef = useRef(null);
 
     // Obtener proyectos al cargar el componente
     useEffect(() => {
@@ -22,15 +24,21 @@ const ListProjects = () => {
 
     return (
         <ul className="listProjects">
-       
-            {projects.map(project => (
-  
-                    <Project
-                         key={project.id}
-                        project={project}
-                    />
-               
-            ))}
+            <TransitionGroup>
+                    
+                {projects.map(project => (
+                    <CSSTransition
+                        key={project._id}
+                        timeout={200}
+                        classNames="project"
+                        nodeRef={nodeRef}
+                    >
+                        <Project
+                            project={project}
+                        />
+                    </CSSTransition>
+                ))}
+            </TransitionGroup>
           
         </ul>
     );

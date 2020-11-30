@@ -16,13 +16,6 @@ import {
 
 const ProjectState = props => {
 
-    const projects = [
-        { id: 1, name: 'Tienda virtual' },
-        { id: 2, name: 'Desarrollo de Base de datos' },
-        { id: 3, name: 'Diseño de sitio web' }
-    ];
-
-
     const initialState = {
         // Proyectos
         projects : [],
@@ -42,11 +35,17 @@ const ProjectState = props => {
     }
 
     // Obtener losproyectos
-    const getProjects = () => {
-        dispatch({
-            type: GET_PROJECTS,
-            payload: projects
-        })
+    const getProjects = async () => {
+        try {
+            const result = await axiosClient.get('/api/projects');
+
+            dispatch({
+                type: GET_PROJECTS,
+                payload: result.data
+            });
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     // Add new project
