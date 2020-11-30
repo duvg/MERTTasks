@@ -6,9 +6,10 @@ import {
     FORM_PROJECT,
     GET_PROJECTS,
     ADD_PROJECT,
+    ERROR_PROJECT,
     VALIDATE_FORM,
     CURRENT_PROJECT,
-    DELETE_PROJECT
+    DELETE_PROJECT,
  } from '../../types';
 
  import axiosClient from '../../config/axios';
@@ -21,7 +22,8 @@ const ProjectState = props => {
         projects : [],
         form : false,
         errorform: false,
-        project: null
+        project: null,
+        message: null
     }
 
     // Dispatch para ejecutar las acciones
@@ -44,7 +46,15 @@ const ProjectState = props => {
                 payload: result.data
             });
         } catch (error) {
-            console.log(error);
+            const alert = {
+                msg: 'Ocurrio un error',
+                category: 'danger'
+            }
+
+            dispatch({
+                type: ERROR_PROJECT,
+                payload: alert
+            });
         }
     }
 
@@ -59,7 +69,15 @@ const ProjectState = props => {
                 payload: result.data
             });
         } catch (error) {
-            console.log(error);
+            const alert = {
+                msg: 'Ocurrio un error',
+                category: 'danger'
+            }
+
+            dispatch({
+                type: ERROR_PROJECT,
+                payload: alert
+            });
         }
     }
 
@@ -80,11 +98,27 @@ const ProjectState = props => {
     }
 
     // Eliminar proyecto
-    const deleteProject = projectId => {
-        dispatch({
-            type: DELETE_PROJECT,
-            payload: projectId
-        })
+    const deleteProject = async projectId => {
+
+        try {
+            await axiosClient.delete(`/api/projects/1`);
+
+            dispatch({
+                type: DELETE_PROJECT,
+                payload: projectId
+            });
+        } catch (error) {
+            const alert = {
+                msg: 'Ocurrio un error',
+                category: 'danger'
+            }
+
+            dispatch({
+                type: ERROR_PROJECT,
+                payload: alert
+            });
+        }
+        
     }
 
 
@@ -96,6 +130,7 @@ const ProjectState = props => {
                 form: state.form,
                 errorform: state.errorform,
                 project: state.project,
+                message: state.message,
                 // Funciones
                 showForm,
                 getProjects,

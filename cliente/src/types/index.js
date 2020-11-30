@@ -5,6 +5,7 @@ export const ADD_PROJECT = 'ADD_PROJECT';
 export const VALIDATE_FORM = 'VALIDATE_FORM';
 export const CURRENT_PROJECT = 'CURRENT_PROJECT';
 export const DELETE_PROJECT = 'DELETE_PROJECT';
+export const ERROR_PROJECT = 'ERROR_PROJECT';
 
 // Types para tareas
 export const TASKS_PROJECT = 'TASKS_PROJECT';
@@ -28,4 +29,5 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_ERROR = 'LOGIN_ERROR'; 
 export const GET_USER = 'GET_USER';
 export const CLOSE_SESION = 'CLOSE_SESION';
+
 
