@@ -308,3 +308,12 @@ a.article:hover {
   opacity: 0;
   transition: opacity 200ms;
 }
+
+.cerrar-sesion{
+  background: none;
+  border: none;
+}
+
+.cerrar-sesion:hover {
+  text-decoration: underline;  
+}
