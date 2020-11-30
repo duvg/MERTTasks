@@ -1,7 +1,5 @@
 import React, { useReducer } from 'react';
 
-import { v4 as uuidv4 } from 'uuid';
-
 import projectContext from './projectContext';
 import projectReducer from './projectReducer';
 import { 
@@ -12,6 +10,8 @@ import {
     CURRENT_PROJECT,
     DELETE_PROJECT
  } from '../../types';
+
+ import axiosClient from '../../config/axios';
 
 
 const ProjectState = props => {
@@ -50,14 +50,18 @@ const ProjectState = props => {
     }
 
     // Add new project
-    const addProject = project => {
-        project.id = uuidv4();
+    const addProject = async project => {
+        try {
+            const result = await axiosClient.post('/api/projects', project);
 
-        // Guardar proyecto en el state
-        dispatch({
-            type: ADD_PROJECT,
-            payload: project
-        });
+            // Guardar proyecto en el state
+            dispatch({
+                type: ADD_PROJECT,
+                payload: result.data
+            });
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     // Error de validacion del form
