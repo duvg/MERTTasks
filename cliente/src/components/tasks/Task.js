@@ -18,8 +18,8 @@ const Task = ({task}) => {
 
     // Eliminar la tarea cuando el usario hace click en el boton eliminar
     const handleTaskDelete = taskId => {
-        deleteTask(taskId);
-        getTasks(currentProject.id);
+        deleteTask(taskId, currentProject._id);
+        getTasks(currentProject._id);
     }
 
     // Modificar el estado de la tarea
@@ -52,7 +52,7 @@ const Task = ({task}) => {
                 <button
                     type="button"
                     className="btn btn-danger btn-sm"
-                    onClick={() => handleTaskDelete(task.id)}
+                    onClick={() => handleTaskDelete(task._id)}
                 >
                     Eliminar
                 </button>

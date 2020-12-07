@@ -67,8 +67,7 @@ const FormTask = () => {
         // Revisar si es edición o si es una nueva tarea
         if (currenttask === null) {
             // Agregar la nueva tarea al state de las tareas
-            task.projectId = currentProject.id;
-            task.status = false;
+            task.project = currentProject._id;
             addTask(task);
         } else {
             // Actualizar la tarea
@@ -79,7 +78,7 @@ const FormTask = () => {
         }
 
         // Obtener y filtrar las tareas del proyecto actual
-        getTasks(currentProject.id);
+        getTasks(currentProject._id);
 
         // Reiniciar el form
         setTask({

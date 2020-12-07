@@ -52,7 +52,7 @@ exports.getTasks = async (req, res) => {
 
     try {
         // Extraer el proyecto y comproabr si existe
-        let { project } = req.body;
+        let { project } = req.query;
 
         const userProject = await Project.findById(project);
 
@@ -66,7 +66,7 @@ exports.getTasks = async (req, res) => {
         }
 
         // Obtener las tareas por proyecto
-        const tasks = await Task.find({ project: project });
+        const tasks = await Task.find({ project: project }).sort({createdAt: -1});
         res.status(200).json({tasks});
         
     } catch (error) {
@@ -123,7 +123,7 @@ exports.updateTask = async (req, res) => {
 exports.deleteTask = async (req, res) => {
     try {
         // Extraer el proyecto y comproabr si existe
-        let { project } = req.body;
+        let { project } = req.query;
 
         // Verificar si la tarea existe
         let task = await Task.findById(req.params.id);

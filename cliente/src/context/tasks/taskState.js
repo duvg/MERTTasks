@@ -1,8 +1,7 @@
 import React, { useReducer } from 'react';
 import TaskContext from './taskContext';
 import TaskReducer from './taskReducer';
-
-import {v4 as uuidv4 } from 'uuid';
+import axiosClient from '../../config/axios';
 
 import {
     TASKS_PROJECT,
@@ -17,19 +16,8 @@ import {
 
 const TaskState = props => {
     const initialState = {
-        tasks: [
-            { id: 1, projectId: 1,name: 'Elegir Plataforma', status: true },
-            { id: 2, projectId: 2,name: 'Elegir Cursos', status: false },
-            { id: 3, projectId: 3,name: 'Elegir Dominios', status:  false },
-            { id: 4, projectId: 4,ame: 'Elegir Hardware', status: true },
-            { id: 5, projectId: 3,name: 'Elegir Plataforma', status: true },
-            { id: 6, projectId: 2,name: 'Elegir Cursos', status: false },
-            { id: 7, projectId: 3,name: 'Elegir Dominios', status:  false },
-            { id: 8, projectId: 4,name: 'Elegir Plataforma', status: true },
-            { id: 9, projectId: 1,name: 'Elegir Cursos', status: false },
-            { id: 10, projectId: 1,name: 'Elegir Dominios', status:  false },
-        ],
-        tasksproject: null,
+        
+        tasksproject: [],
         errorTask: false,
         currenttask: null
     }
@@ -41,35 +29,54 @@ const TaskState = props => {
 
 
     // Obtener las tareas de un proyecto
-    const getTasks = projectId => {
-        dispatch({
-            type: TASKS_PROJECT,
-            payload: projectId
-        });
+    const getTasks = async project => {
+        try {
+
+            const result = await axiosClient.get('/api/tasks', {params: { project } });
+            console.log(result);
+            dispatch({
+                type: TASKS_PROJECT,
+                payload: result.data.tasks
+            });
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     // Valida y muestra un error si no pasa la validación
     const validateTask = () => {
         dispatch({
             type: VALIDATE_TASK
-        })
+        });
     }
 
     // Agregar una tarea al proyecto seleccionado
-    const addTask = task => {
-        task.id = uuidv4(); // Asignamos el id a la tarea
-        dispatch({
-            type: ADD_TASK,
-            payload: task
-        })
+    const addTask = async task => {
+        
+        try {
+            const result = await axiosClient.post('/api/tasks', task);
+            console.log(result);
+            dispatch({
+                type: ADD_TASK,
+                payload: task
+            });
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     // Eliminar tarea por id
-    const deleteTask = taskId => {
-        dispatch({
-            type: DELETE_TASK,
-            payload: taskId
-        });
+    const deleteTask = async (taskId, project) => {
+        try {
+            const result = await  axiosClient.delete(`/api/tasks/${taskId}`, {params: { project } });
+            console.log(result);
+            dispatch({
+                type: DELETE_TASK,
+                payload: taskId
+            });
+        } catch (error) {
+            console.log(error);
+        }
     } 
 
     // Cambiar el estado de una tarea
@@ -77,7 +84,7 @@ const TaskState = props => {
         dispatch({
             type: STATUS_TASK,
             payload: task
-        })
+        });
     }
        
     // Extrae una tarea para edición
@@ -107,7 +114,6 @@ const TaskState = props => {
         <TaskContext.Provider
             value={{ 
                 // state values
-                tasks: state.tasks,
                 tasksproject: state.tasksproject,
                 errortask: state.errortask,
                 currenttask: state.currenttask,

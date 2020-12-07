@@ -4,9 +4,6 @@ module.exports = function(req, res, next) {
     // Leer el token del heaeder
     const token = req.header('x-auth-token');
 
-    //console.log(req);
-    console.log(token);
-
     // Rervisar si no hay token
     if ( ! token) {
         res.status(401).json({msg: 'Token invalido, permiso denegado'});

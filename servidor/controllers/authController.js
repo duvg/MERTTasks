@@ -17,7 +17,7 @@ exports.authUser = async (req, res) => {
         let user = await User.findOne({ email });
         
         if ( ! user ) {
-            return res.status(400).json({msg: 'El usuario no existe'});
+            return res.status(404).json({msg: 'El usuario no existe'});
         }
 
         // Verificar el password
@@ -48,5 +48,17 @@ exports.authUser = async (req, res) => {
 
     } catch (error) {
         console.log(error);
+    }
+}
+
+// Obtiene el usuaro autenticado
+
+exports.userAuthenticated = async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).select('-password');
+        res.status(200).json({user});
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({msg: 'Ocurrio un error'});
     }
 }
