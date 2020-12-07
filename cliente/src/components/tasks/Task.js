@@ -12,7 +12,7 @@ const Task = ({task}) => {
 
     // Obtener el context y extraer la función
     const tasksContext = useContext(taskContext);
-    const { getTasks, deleteTask, changeTaskStatus, setCurrentTask } = tasksContext;
+    const { getTasks, deleteTask, updateTask, setCurrentTask } = tasksContext;
 
 
 
@@ -29,7 +29,7 @@ const Task = ({task}) => {
         } else {
             task.status = true;
         }
-        changeTaskStatus(task);
+        updateTask(task);
     }
 
     // Obtener la tarea actual que el usuario desea editarr

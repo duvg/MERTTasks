@@ -8,7 +8,6 @@ import {
     ADD_TASK,
     VALIDATE_TASK,
     DELETE_TASK,
-    STATUS_TASK,
     CURRENT_TASK,
     UPDATE_TASK,
     UNSELECT_TASK
@@ -79,12 +78,20 @@ const TaskState = props => {
         }
     } 
 
-    // Cambiar el estado de una tarea
-    const changeTaskStatus = task => {
-        dispatch({
-            type: STATUS_TASK,
-            payload: task
-        });
+    // Actualiza una tarea
+    const updateTask = async task => {
+        try {
+
+            const result = await axiosClient.put(`/api/tasks/${task._id}`, task);
+            console.log(result.data);
+            dispatch({
+                type: UPDATE_TASK, 
+                payload: result.data
+            });
+        } catch (error) {
+            console.log(error);
+        }
+        
     }
        
     // Extrae una tarea para edición
@@ -95,13 +102,7 @@ const TaskState = props => {
         });
     }
 
-    // Actualiza una tarea
-    const updateTask = task => {
-        dispatch({
-            type: UPDATE_TASK, 
-            payload: task
-        });
-    }
+    
 
     // Elimina la tarea seleccionada
     const unselectTask = () => {
@@ -122,7 +123,6 @@ const TaskState = props => {
                 addTask,
                 validateTask,
                 deleteTask,
-                changeTaskStatus,
                 setCurrentTask,
                 updateTask,
                 unselectTask

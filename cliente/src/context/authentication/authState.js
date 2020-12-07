@@ -58,8 +58,8 @@ const AuthState = props => {
     // Retorna el usuario autenticado
     const userAuthenticated = async () => {
         const token = localStorage.getItem('token');
-        console.log(token);
-        // Asiganr el token en los default headers
+    
+        // Asignar el token en los default headers
         if (token) {
             tokenAuth(token);
         } 

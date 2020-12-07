@@ -9,6 +9,8 @@ const PrivateRoute= ({ component: Component, ...props }) => {
 
     useEffect(() => {
         userAuthenticated();
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
